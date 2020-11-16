@@ -18,22 +18,26 @@ function App() {
     const [online, setOnline] = useState(false);
     const [bands, setBands] = useState([]);
 
+    //escuchando conexion de socketio
     useEffect(() => {
         setOnline(socket.connected);
     }, [socket])
 
+    //escuchar la conexion
     useEffect(() => {
        socket.on('connect', () => {
            setOnline(true);
        })
     }, [socket])
 
+    //escuchar la desconexion
     useEffect(() => {
        socket.on('disconnect', () => {
            setOnline(false);
        })
     }, [socket])
 
+    //escuchar cualquier cambio emitido por servidor llamado current-bands
     useEffect(() => {
        socket.on('current-bands', (bands) => {
            console.log(bands);

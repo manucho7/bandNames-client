@@ -8,6 +8,21 @@ export const BandList = ({ data }) => {
         setBands( data );
     }, [ data ])
 
+    const handleInputChange = (e, id) => {
+        const newName = e.target.value;
+        setBands(bands => bands.map( band => {
+            if (band.id === id) {
+                band.name = newName
+            }
+            return band;
+        }));
+    }
+
+    const looseFocus = (id, nombre) => {
+        console.log(id, nombre);
+
+        //TODO: dispatch socket event
+    }
 
     const crearRows = () => {
         return (
@@ -20,9 +35,11 @@ export const BandList = ({ data }) => {
                         <input
                             className="form-control"
                             value={band.name}
+                            onChange={ (e) => handleInputChange(e, band.id) }
+                            onBlur={ () => looseFocus(band.id, band.name) }
                         />
                     </td>
-                    <td><h3> 15 </h3></td>
+                    <td><h3> {band.votes} </h3></td>
                     <td>
                         <button className="btn btn-danger">
                             Borrar
