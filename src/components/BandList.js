@@ -1,13 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { SocketContext } from '../context/SocketContext';
 
 
-export const BandList = ({ data, votar, borrarBanda, cambiarNombre }) => {
+export const BandList = () => {
 
-    const [bands, setBands] = useState(data);
+    const [bands, setBands] = useState([]);
+
+    const { socket } = useContext(SocketContext);
 
     useEffect(() => {
-        setBands( data );
-    }, [ data ])
+
+        socket.on('current-bands', (bands) => {
+            setBands(bands);
+        })
+
+        return () => socket.off('current-bands');
+    }, [ socket ])
 
     const handleInputChange = (e, id) => {
         const newName = e.target.value;
@@ -20,10 +28,16 @@ export const BandList = ({ data, votar, borrarBanda, cambiarNombre }) => {
     }
 
     const looseFocus = (id, nombre) => {
-        console.log(id, nombre);
-
         //dispatch socket event
-        cambiarNombre(id, nombre);
+        socket.emit('cambiar-nombre-banda', { id, nombre });
+    }
+
+    const votar = (id) => {
+        socket.emit('votar-banda', id);
+    }
+
+    const borrarBanda = (id) => {
+        socket.emit('borrar-banda', id);
     }
 
     const crearRows = () => {
