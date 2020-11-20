@@ -1,35 +1,37 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
+import { SocketContext } from '../context/SocketContext';
 
-import { BandAdd } from './components/BandAdd';
-import { BandList } from './components/BandList';
-import { useSocket } from './hooks/useSocket';
+import { BandAdd } from '../components/BandAdd';
+import { BandList } from '../components/BandList';
 
-function App() {
-    const [bands, setBands] = useState([]);
 
-    const {socket, online} = useSocket('http://localhost:8080')
+function HomePage() {
+
+    // const [bands, setBands] = useState([]);
+
+    const { online } = useContext(SocketContext);
 
     //escuchar cualquier cambio emitido por servidor llamado current-bands
-    useEffect(() => {
+    // useEffect(() => {
 
-       socket.on('current-bands', (bands) => {
+    //    socket.on('current-bands', (bands) => {
 
-           console.log(bands);
-           setBands(bands);
-       })
-    }, [socket])
+    //        console.log(bands);
+    //        setBands(bands);
+    //    })
+    // }, [socket])
 
-    const votar = (id) => {
-        socket.emit('votar-banda', id);
-    }
+    // const votar = (id) => {
+    //     socket.emit('votar-banda', id);
+    // }
 
-    const borrarBanda = (id) => {
-        socket.emit('borrar-banda', id);
-    }
+    // const borrarBanda = (id) => {
+    //     socket.emit('borrar-banda', id);
+    // }
 
-    const cambiarNombre = (id, nombre) => {
-        socket.emit('cambiar-nombre-banda', { id, nombre });
-    }
+    // const cambiarNombre = (id, nombre) => {
+    //     socket.emit('cambiar-nombre-banda', { id, nombre });
+    // }
 
 
     return (
@@ -51,17 +53,17 @@ function App() {
 
             <div className="row">
                 <div className="col-8">
-                    <BandList 
+                    {/* <BandList 
                         data={ bands }
                         votar={ votar }
                         borrarBanda={ borrarBanda }
                         cambiarNombre={ cambiarNombre }
-                    />
+                    /> */}
                 </div>
    
 
                 <div className="col-4">
-                    <BandAdd />
+                    {/* <BandAdd /> */}
                 </div>
             </div>
 
@@ -69,4 +71,4 @@ function App() {
     );
 }
 
-export default App;
+export default HomePage;
