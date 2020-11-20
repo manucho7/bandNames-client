@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
+import { useSocket } from '../hooks/useSocket';
 
-export const BandAdd = ({ crearBanda }) => {
+export const BandAdd = () => {
+
+    const { socket } = useSocket('http://localhost:8080');
 
     const [ valor, setValor ] = useState();
 
@@ -8,7 +11,8 @@ export const BandAdd = ({ crearBanda }) => {
         e.preventDefault();
 
         if (valor.trim().length > 0) {
-            crearBanda(valor);
+            
+            socket.emit('nueva-banda', { nombre: valor });
 
             setValor('');
         }

@@ -4,8 +4,6 @@ import { BandAdd } from './components/BandAdd';
 import { BandList } from './components/BandList';
 import { useSocket } from './hooks/useSocket';
 
-
-
 function App() {
     const [bands, setBands] = useState([]);
 
@@ -31,9 +29,6 @@ function App() {
         socket.emit('cambiar-nombre-banda', { id, nombre });
     }
 
-    const crearBanda = (nombre) => {
-        socket.emit('nueva-banda', { nombre });
-    }
 
     return (
         <div className="container">
@@ -64,9 +59,7 @@ function App() {
    
 
                 <div className="col-4">
-                    <BandAdd 
-                        crearBanda={ crearBanda }
-                    />
+                    <BandAdd />
                 </div>
             </div>
 
