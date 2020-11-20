@@ -11,7 +11,9 @@ function App() {
 
     //escuchar cualquier cambio emitido por servidor llamado current-bands
     useEffect(() => {
+
        socket.on('current-bands', (bands) => {
+
            console.log(bands);
            setBands(bands);
        })
